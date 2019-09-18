@@ -20,10 +20,9 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     open fun initView() {}
-    open fun initObserver() {}
-    open fun initProgressObserver(vararg baseViewModels : BaseViewModel){
-        baseViewModels.forEach {viewModel ->
-            viewModel.isOnProgress.observe(this, Observer {isOnProgress ->
+    open fun initObserver(vararg baseViewModels: BaseViewModel) {
+        baseViewModels.forEach { viewModel ->
+            viewModel.isOnProgress.observe(this, Observer { isOnProgress ->
                 when (isOnProgress) {
                     true -> {
                         Timber.i("Loading...")
@@ -38,18 +37,22 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
-    protected fun showProgressDialog(){
-        supportFragmentManager
-            .beginTransaction()
-            .add(progressDialog, progressDialog.TAG)
-            .commit()
+    protected fun showProgressDialog() {
+        if (supportFragmentManager.findFragmentByTag(progressDialog.TAG) == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(progressDialog, progressDialog.TAG)
+                .commit()
+        }
     }
 
-    protected fun dismissProgressDialog(){
-        supportFragmentManager
-            .beginTransaction()
-            .remove(progressDialog)
-            .commit()
+    protected fun dismissProgressDialog() {
+        if (supportFragmentManager.findFragmentByTag(progressDialog.TAG) != null) {
+            supportFragmentManager
+                .beginTransaction()
+                .remove(progressDialog)
+                .commit()
+        }
     }
 
 }
