@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>default_item_amount</key>
+        <value>99999</value>
+    </entry>
+    <entry>
+        <key>default_item_list_policy</key>
+        <value>sequence_asc</value>
+    </entry>
+</defaultsMap>

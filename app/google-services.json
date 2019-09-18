@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1094302869427",
+    "firebase_url": "https://charon-9ba14.firebaseio.com",
+    "project_id": "charon-9ba14",
+    "storage_bucket": "charon-9ba14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094302869427:android:93ddf644aa489a8346cdc6",
+        "android_client_info": {
+          "package_name": "com.n8ify.charon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094302869427-dqqhhp5u70umpqudra1t1igo38d3n93g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.n8ify.charon",
+            "certificate_hash": "618c2e47e4190ef609d31500a7323ed3a4f95c75"
+          }
+        },
+        {
+          "client_id": "1094302869427-5brv8q9rv73aas9guu1699g2jfb0qjtv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXhevH5rR_v-j0Yd7LGQ-xPKt0XmS90f0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094302869427-5brv8q9rv73aas9guu1699g2jfb0qjtv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

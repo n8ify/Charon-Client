@@ -8,8 +8,8 @@ import java.lang.Exception
 
 class ItemRepositoryImpl(private val itemAPI: ItemAPI) : ItemRepository {
 
-    override suspend fun getItem(id: Int): UseCaseResult<ListItemResponse> {
-        val result = itemAPI.getCategoryItem(id).await()
+    override suspend fun getItem(id: Int, amount : Int, listPolicy : String): UseCaseResult<ListItemResponse> {
+        val result = itemAPI.getCategoryItem(id = id, amount = amount, listPolicy = listPolicy).await()
         return try {
             UseCaseResult.Success(result)
         } catch (e: Exception) {

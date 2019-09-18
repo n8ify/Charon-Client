@@ -5,6 +5,6 @@ import com.n8ify.charon.model.rest.response.item.ListItemResponse
 
 interface ItemRepository {
 
-    suspend fun getItem(id : Int) : UseCaseResult<ListItemResponse>
+    suspend fun getItem(id : Int, amount : Int, listPolicy : String) : UseCaseResult<ListItemResponse>
 
 }

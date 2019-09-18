@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
@@ -44,6 +45,7 @@ dependencies {
 
     // Lifecycle library
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha02'
+    implementation 'com.google.firebase:firebase-config:16.1.0'
     annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.1.0-alpha02'
 
     // Timber

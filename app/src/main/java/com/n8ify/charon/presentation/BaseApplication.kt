@@ -1,7 +1,10 @@
 package com.n8ify.charon.presentation
 
 import android.app.Application
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.n8ify.charon.BuildConfig
+import com.n8ify.charon.R
 import com.n8ify.charon.module.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -22,6 +25,7 @@ class BaseApplication : Application() {
             androidContext(this@BaseApplication.applicationContext)
             modules(appModule)
         }
+
     }
 
 }
