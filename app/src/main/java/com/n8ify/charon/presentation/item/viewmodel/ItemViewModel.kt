@@ -18,8 +18,8 @@ class ItemViewModel(private val itemRepository: ItemRepository, application: App
 
     val guessQueue by lazy { MutableLiveData<LinkedBlockingQueue<Item>>().apply { this.value = LinkedBlockingQueue() } }
     val guessQueueResult by lazy { LinkedBlockingQueue<Pair<Item, Boolean>>() }
+    var guessQueueSize : Int = 0
 
-    val roundTime : Long  by lazy { 120 * 1000L }
 
     private val job = Job()
     override val coroutineContext: CoroutineContext
@@ -38,6 +38,7 @@ class ItemViewModel(private val itemRepository: ItemRepository, application: App
                 is UseCaseResult.Success -> {
                     // Note : Paring guess item and default un-guess flag.
                     this@ItemViewModel.guessQueue.value = LinkedBlockingQueue(useCase.result.data)
+//                    guessQueueSize = this@ItemViewModel.guessQueue.value?.size?:-1
                 }
                 is UseCaseResult.Error -> {
                     Timber.e(useCase.t)

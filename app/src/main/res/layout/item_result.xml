@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <LinearLayout
+            android:weightSum="1"
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <TextView
+                android:id="@+id/tv_guess_status"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="$Status"
+                android:layout_weight="0.3"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="16dp"/>
+        <View
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:background="#ededed"/>
+        <TextView
+                android:id="@+id/tv_guess_item"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="#GuessItem"
+                android:layout_weight="0.7"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:textSize="16dp"/>
+    </LinearLayout>
+
+    <View android:background="#eee"
+          android:layout_width="match_parent" android:layout_height="1px"
+          android:paddingBottom="16dp">
+    </View>
+</LinearLayout>

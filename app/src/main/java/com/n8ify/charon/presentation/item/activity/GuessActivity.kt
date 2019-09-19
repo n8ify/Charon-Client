@@ -4,22 +4,29 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.PersistableBundle
+import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.view.View
 import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
 import com.n8ify.charon.R
+import com.n8ify.charon.constant.CommonConstant
 import com.n8ify.charon.model.entity.Item
 import com.n8ify.charon.presentation._base.activity.BaseActivity
 import com.n8ify.charon.presentation._base.viewmodel.BaseViewModel
+import com.n8ify.charon.presentation.item.fragment.GuessFragment
 import com.n8ify.charon.presentation.item.fragment.PrepareFragment
+import com.n8ify.charon.presentation.item.fragment.ResultDialogFragment
 import com.n8ify.charon.presentation.item.misc.DetectSwipeGestureListener
 import com.n8ify.charon.presentation.item.viewmodel.ItemViewModel
 import kotlinx.android.synthetic.main.activity_guess.*
+import kotlinx.android.synthetic.main.card_guess_item.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.util.*
 
-class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChangeListener {
+class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChangeListener, ResultDialogFragment.ResultCallback {
 
     private val itemViewModel: ItemViewModel by viewModel()
 
@@ -27,20 +34,25 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         GestureDetectorCompat(this@GuessActivity, DetectSwipeGestureListener.getInstance(this@GuessActivity))
     }
 
-    val countDownTimer by lazy {
-        object : CountDownTimer(itemViewModel.roundTime, 1000) {
+    private val countDownTimer by lazy {
+        object : CountDownTimer(CommonConstant.DEFAULT_ROUND_TIME_MILLISECOND, 1000) {
             override fun onFinish() {
                 Toast.makeText(this@GuessActivity, "Timeout!", Toast.LENGTH_LONG).show()
-                // TODO : Show result.
+                showResult()
             }
 
             override fun onTick(millisUntilFinished: Long) {
                 val secondLeft = millisUntilFinished / 1000
                 Timber.i("Second left : %d ", secondLeft)
-                tv_timer.text = secondLeft.toString()
+                if (secondLeft != 0L) {
+                    tv_timer.text = secondLeft.toString()
+                }
             }
         }
     }
+
+    lateinit var guessCardFragment: GuessFragment
+    lateinit var guessCard : View
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -54,11 +66,14 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
 
     }
 
-    private fun prepareAndStart(){
+    private fun prepareAndStart() {
 
         val prepareFragment = PrepareFragment.newInstance {
-                supportFragmentManager.beginTransaction().remove(it).commit()
-                countDownTimer.start()
+            supportFragmentManager.beginTransaction().remove(it).commit()
+            countDownTimer.start()
+            itemViewModel.guessQueue.value?.let { guessItems ->
+                nextGuess(guessItems.peek())
+            }
         }
 
         supportFragmentManager
@@ -71,7 +86,9 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
 
         super.initObserver(itemViewModel)
         itemViewModel.isOnProgress.observe(this, androidx.lifecycle.Observer {
-            if(!it){ prepareAndStart() }
+            if (!it) {
+                prepareAndStart()
+            }
         })
     }
 
@@ -86,12 +103,20 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
             println("Correct! ${itemViewModel.guessQueue.value}")
             itemViewModel.correct(it)
         }
+
+        itemViewModel.guessQueue.value?.peek()?.let {
+            definedPostAction()
+        }
     }
 
     override fun onDown() {
         itemViewModel.guessQueue.value?.remove()?.let {
             println("Skip! ${itemViewModel.guessQueue.value}")
             itemViewModel.skip(it)
+        }
+
+        itemViewModel.guessQueue.value?.peek()?.let {
+            definedPostAction()
         }
     }
 
@@ -102,6 +127,54 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
 
     override fun onLeft() {
         println("Left!")
+    }
+
+    private fun nextGuess(item: Item) {
+
+        if (::guessCardFragment.isInitialized) {
+            supportFragmentManager
+                .beginTransaction()
+                .remove(guessCardFragment)
+                .commit()
+        }
+
+        guessCardFragment = GuessFragment.newInstance(item)
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.ll_item_container, guessCardFragment, guessCardFragment.TAG)
+            .commit()
+
+//        if(::guessCard.isInitialized){
+//            ll_item_container.removeAllViews()
+//        }
+//
+//        guessCard = LayoutInflater.from(this@GuessActivity).inflate(R.layout.card_guess_item, null)
+//        guessCard.tv_guess_item.text = item.value
+//        ll_item_container.addView(guessCard)
+
+    }
+
+    private fun definedPostAction(){
+        itemViewModel.guessQueue.value?.peek().let {
+            if (it != null) {
+                nextGuess(it)
+            } else {
+                showResult()
+            }
+        }
+    }
+
+    private fun showResult() {
+        val resultDialogFragment =
+            ResultDialogFragment.newInstance(itemViewModel.guessQueueResult, itemViewModel.guessQueueSize)
+        supportFragmentManager
+            .beginTransaction()
+            .add(resultDialogFragment, resultDialogFragment.TAG)
+            .commit()
+    }
+
+    override fun onBackClick() {
+        finish()
     }
 
 }

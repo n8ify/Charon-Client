@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class BaseViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     val context = view.context
-    val activity = view.context as Activity
+
+    fun getString(resId : Int) : String = context.getString(resId)
 
 }

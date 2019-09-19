@@ -16,24 +16,27 @@ class PrepareFragment : DialogFragment() {
 
     val TAG = PrepareFragment::class.java.simpleName
 
-    val countDownTimer = object : CountDownTimer(CommonConstant.DEFAULT_PREPARE_TIME_MILLISECOND, CommonConstant.MILLISECOND){
+    val countDownTimer =
+        object : CountDownTimer(CommonConstant.DEFAULT_PREPARE_TIME_MILLISECOND, CommonConstant.MILLISECOND) {
 
-        override fun onFinish() {
-            Timber.i("Prepare time up!")
-            postActionFunction.invoke(this@PrepareFragment)
+            override fun onFinish() {
+                Timber.i("Prepare time up!")
+                postActionFunction.invoke(this@PrepareFragment)
+            }
+
+            override fun onTick(millisUntilFinished: Long) {
+                val secondLeft = millisUntilFinished / CommonConstant.MILLISECOND
+                Timber.i("Prepare time left : %d", secondLeft)
+                if (secondLeft != 0L) {
+                    view?.findViewById<TextView>(R.id.tv_prepare_countdown)?.text = secondLeft.toString()
+                }
+            }
+
         }
-
-        override fun onTick(millisUntilFinished: Long) {
-            val secondLeft = millisUntilFinished / CommonConstant.MILLISECOND
-            Timber.i("Prepare time left : %d", secondLeft)
-            view?.findViewById<TextView>(R.id.tv_prepare_countdown)?.text = secondLeft.toString()
-        }
-
-    }
 
     companion object {
 
-        fun newInstance(postActionFunction : (DialogFragment) -> Unit) : PrepareFragment {
+        fun newInstance(postActionFunction: (DialogFragment) -> Unit): PrepareFragment {
             return PrepareFragment().apply {
                 this@apply.postActionFunction = postActionFunction
             }
@@ -41,7 +44,7 @@ class PrepareFragment : DialogFragment() {
 
     }
 
-    lateinit var postActionFunction : (DialogFragment) -> Unit
+    lateinit var postActionFunction: (DialogFragment) -> Unit
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dialog_prepare, container, false).also {

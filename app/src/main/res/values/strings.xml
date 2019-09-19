@@ -2,6 +2,23 @@
 
     <string name="app_name">Charon</string>
 
+    <!-- Result -->
+    <string name="result_guess">ผลลัพธ์ที่ได้ %1$d/%2$d %3$s</string>
+    <string name="result_message_feedback_f">เกรด F</string>
+    <string name="result_message_feedback_d">เกรด D</string>
+    <string name="result_message_feedback_c">เกรด C</string>
+    <string name="result_message_feedback_c_plus">เกรด C+</string>
+    <string name="result_message_feedback_b">เกรด B</string>
+    <string name="result_message_feedback_b_plus">เกรด B+</string>
+    <string name="result_message_feedback_a">เกรด A</string>
+    <string name="result_message_feedback_a_plus">เกรด A+</string>
+    <string name="result_message_feedback_a_plus_plus">เกรด A++</string>
+
     <!-- Common -->
     <string name="loading">กำลังโหลด</string>
+    <string name="back">กลับ</string>
+    <string name="timeup">หมดเวลา!</string>
+
+    <string name="status_correct">ทายถูก</string>
+    <string name="status_skip">ข้าม</string>
 </resources>
