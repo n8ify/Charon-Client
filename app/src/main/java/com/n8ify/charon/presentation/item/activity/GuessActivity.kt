@@ -1,6 +1,7 @@
 package com.n8ify.charon.presentation.item.activity
 
 import android.content.Intent
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -39,6 +40,7 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
             override fun onFinish() {
                 Toast.makeText(this@GuessActivity, "Timeout!", Toast.LENGTH_LONG).show()
                 showResult()
+                playTimeUpTimeSound()
             }
 
             override fun onTick(millisUntilFinished: Long) {
@@ -74,6 +76,7 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
             itemViewModel.guessQueue.value?.let { guessItems ->
                 nextGuess(guessItems.peek())
             }
+            playStartTimeSound()
         }
 
         supportFragmentManager
@@ -102,6 +105,7 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         itemViewModel.guessQueue.value?.remove()?.let {
             println("Correct! ${itemViewModel.guessQueue.value}")
             itemViewModel.correct(it)
+            playCorrectSound()
         }
 
         itemViewModel.guessQueue.value?.peek()?.let {
@@ -113,6 +117,7 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         itemViewModel.guessQueue.value?.remove()?.let {
             println("Skip! ${itemViewModel.guessQueue.value}")
             itemViewModel.skip(it)
+            playSkipSound()
         }
 
         itemViewModel.guessQueue.value?.peek()?.let {
@@ -135,20 +140,20 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
             supportFragmentManager
                 .beginTransaction()
                 .remove(guessCardFragment)
-                .commit()
+                .commitAllowingStateLoss()
         }
 
         guessCardFragment = GuessFragment.newInstance(item)
         supportFragmentManager
             .beginTransaction()
             .add(R.id.ll_item_container, guessCardFragment, guessCardFragment.TAG)
-            .commit()
+            .commitAllowingStateLoss()
 
 //        if(::guessCard.isInitialized){
 //            ll_item_container.removeAllViews()
 //        }
 //
-//        guessCard = LayoutInflater.from(this@GuessActivity).inflate(R.layout.card_guess_item, null)
+//        guessCard = LayoutInflater.from(sthis@GuessActivity).inflate(R.layout.card_guess_item, null)
 //        guessCard.tv_guess_item.text = item.value
 //        ll_item_container.addView(guessCard)
 
@@ -170,11 +175,25 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         supportFragmentManager
             .beginTransaction()
             .add(resultDialogFragment, resultDialogFragment.TAG)
-            .commit()
+            .commitAllowingStateLoss()
     }
 
     override fun onBackClick() {
         finish()
+    }
+
+
+    fun playTimeUpTimeSound(){
+        MediaPlayer.create(this@GuessActivity, null).start()
+    }
+    fun playStartTimeSound(){
+        MediaPlayer.create(this@GuessActivity, null).start()
+    }
+    fun playCorrectSound(){
+        MediaPlayer.create(this@GuessActivity, null).start()
+    }
+    fun playSkipSound(){
+        MediaPlayer.create(this@GuessActivity, null).start()
     }
 
 }

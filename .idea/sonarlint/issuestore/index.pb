@@ -79,3 +79,13 @@ m
 =app/src/main/java/com/n8ify/charon/constant/CommonConstant.kt,a/4/a4b268106d48bd5d5a3855b6a5dca928a9be3c9f
 €
 Papp/src/main/java/com/n8ify/charon/presentation/item/fragment/PrepareFragment.kt,7/b/7bf6bebcfff4d006b9d5261047de2af8998dd69c
+~
+Napp/src/main/java/com/n8ify/charon/presentation/_base/fragment/BaseFragment.kt,d/9/d93b44818bc5af7d7bbea181b53d7093bca57c6e
+‚
+Rapp/src/main/java/com/n8ify/charon/presentation/item/adapter/GuessResultAdapter.kt,1/d/1daaead61a17e001eeee6476ed1e6c8905608b38
+ˆ
+Xapp/src/main/java/com/n8ify/charon/presentation/item/viewholder/GuessResultViewHolder.kt,3/e/3e0552327af2a8f4835e45c9b8a07fd7b6d56087
+~
+Napp/src/main/java/com/n8ify/charon/presentation/item/fragment/GuessFragment.kt,8/b/8b52c10a496965aa7441b8b0fc94e4e0e058bd36
+…
+Uapp/src/main/java/com/n8ify/charon/presentation/item/fragment/ResultDialogFragment.kt,f/c/fc2eca89e5e9c14d9d158addefad11858aaf61b1
