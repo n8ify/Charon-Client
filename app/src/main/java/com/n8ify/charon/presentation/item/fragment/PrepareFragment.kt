@@ -1,6 +1,7 @@
 package com.n8ify.charon.presentation.item.fragment
 
 import android.app.Activity
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
@@ -27,9 +28,8 @@ class PrepareFragment : DialogFragment() {
             override fun onTick(millisUntilFinished: Long) {
                 val secondLeft = millisUntilFinished / CommonConstant.MILLISECOND
                 Timber.i("Prepare time left : %d", secondLeft)
-                if (secondLeft != 0L) {
-                    view?.findViewById<TextView>(R.id.tv_prepare_countdown)?.text = secondLeft.toString()
-                }
+                view?.findViewById<TextView>(R.id.tv_prepare_countdown)?.text = secondLeft.toString()
+                playPrepareSound()
             }
 
         }
@@ -55,5 +55,9 @@ class PrepareFragment : DialogFragment() {
     override fun onAttach(activity: Activity) {
         super.onAttach(activity)
         countDownTimer.start()
+    }
+
+    fun playPrepareSound() {
+        MediaPlayer.create(activity, R.raw.prepare_count).start()
     }
 }
