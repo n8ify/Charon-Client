@@ -40,7 +40,7 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
             override fun onFinish() {
                 Toast.makeText(this@GuessActivity, "Timeout!", Toast.LENGTH_LONG).show()
                 showResult()
-                playTimeUpTimeSound()
+                playTimeUpSound()
             }
 
             override fun onTick(millisUntilFinished: Long) {
@@ -183,17 +183,23 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
     }
 
 
-    fun playTimeUpTimeSound(){
-        MediaPlayer.create(this@GuessActivity, null).start()
+    fun playPrepareSound(){
+        MediaPlayer.create(this@GuessActivity, R.raw.prepare_count).start()
     }
+
     fun playStartTimeSound(){
-        MediaPlayer.create(this@GuessActivity, null).start()
+        MediaPlayer.create(this@GuessActivity, R.raw.start).start()
     }
+
+    fun playTimeUpSound(){
+        MediaPlayer.create(this@GuessActivity, R.raw.timeup).start()
+    }
+
     fun playCorrectSound(){
-        MediaPlayer.create(this@GuessActivity, null).start()
+        MediaPlayer.create(this@GuessActivity, R.raw.correct).start()
     }
     fun playSkipSound(){
-        MediaPlayer.create(this@GuessActivity, null).start()
+        MediaPlayer.create(this@GuessActivity, R.raw.skip).start()
     }
 
 }
