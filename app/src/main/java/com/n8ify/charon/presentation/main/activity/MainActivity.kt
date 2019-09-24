@@ -1,7 +1,9 @@
 package com.n8ify.charon.presentation.main.activity
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.tasks.OnCompleteListener
@@ -32,11 +34,15 @@ class MainActivity : BaseActivity(), CategoryViewHolder.CategoryContext {
             this@run.setDefaults(R.xml.remote_config_defaults)
             this@run.fetch(0)
                 .addOnCompleteListener(this@MainActivity, OnCompleteListener {
-                    if(it.isSuccessful){
+                    if (it.isSuccessful) {
                         Timber.i("Remote Configuration is Completely Loaded! .. ${it.result}")
                         this@run.activateFetched()
                         Timber.i("${RemoteConfigConstant.DEFAULT_ITEM_AMOUNT} : ${this@run.getLong(RemoteConfigConstant.DEFAULT_ITEM_AMOUNT)}")
-                        Timber.i("${RemoteConfigConstant.DEFAULT_ITEM_LIST_POLICY} : ${this@run.getString(RemoteConfigConstant.DEFAULT_ITEM_LIST_POLICY)}")
+                        Timber.i(
+                            "${RemoteConfigConstant.DEFAULT_ITEM_LIST_POLICY} : ${this@run.getString(
+                                RemoteConfigConstant.DEFAULT_ITEM_LIST_POLICY
+                            )}"
+                        )
                     } else {
                         Timber.e(it.exception)
                     }
@@ -59,9 +65,23 @@ class MainActivity : BaseActivity(), CategoryViewHolder.CategoryContext {
     }
 
     override fun onCategoryClick(category: Category) {
-        val intent = Intent(this@MainActivity, GuessActivity::class.java).apply {
-            this@apply.putExtra("categoryId", category.id)
-        }
-        startActivity(intent)
+        AlertDialog.Builder(this@MainActivity)
+            .setTitle(R.string.option_timeCount_title)
+            .setItems(R.array.time_count_option) { _, which ->
+                val timeCount = resources.getStringArray(R.array.time_count_option).map { it.toInt() }[which]
+                val intent = Intent(this@MainActivity, GuessActivity::class.java).apply {
+                    this@apply.putExtra("categoryId", category.id)
+                    this@apply.putExtra("timeCount", timeCount)
+                }
+                startActivity(intent)
+            }
+            .setCancelable(false)
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create().also {
+                it.show()
+            }
+
     }
 }

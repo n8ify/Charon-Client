@@ -1,13 +1,11 @@
-package com.n8ify.charon.presentation.item.viewmodel
+package com.n8ify.charon.presentation._base.viewmodel
 
 import android.app.Application
-import android.os.CountDownTimer
 import androidx.lifecycle.MutableLiveData
 import com.n8ify.charon.constant.RemoteConfigConstant
 import com.n8ify.charon.data.repository.ItemRepository
 import com.n8ify.charon.model.entity.Item
 import com.n8ify.charon.model.misc.UseCaseResult
-import com.n8ify.charon.presentation._base.viewmodel.BaseViewModel
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.concurrent.LinkedBlockingQueue

@@ -2,6 +2,9 @@
 
     <string name="app_name">Charon</string>
 
+    <!-- Option -->
+    <string name="option_timeCount_title">รอบเวลา</string>
+
     <!-- Result -->
     <string name="result_guess">ผลลัพธ์ที่ได้ %1$d/%2$d %3$s</string>
     <string name="result_message_feedback_f">เกรด F</string>
@@ -17,8 +20,17 @@
     <!-- Common -->
     <string name="loading">กำลังโหลด</string>
     <string name="back">กลับ</string>
+    <string name="cancel">ยกเลิก</string>
     <string name="timeup">หมดเวลา!</string>
 
     <string name="status_correct">ทายถูก</string>
     <string name="status_skip">ข้าม</string>
+
+    <string-array name="time_count_option">
+        <item>10</item>
+        <item>30</item>
+        <item>60</item>
+        <item>120</item>
+        <item>300</item>
+    </string-array>
 </resources>
