@@ -15,6 +15,7 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.Duration
+import java.util.concurrent.TimeUnit
 
 val appModule = org.koin.dsl.module {
     single { provideRetrofit().create(CategoryAPI::class.java) }
@@ -33,8 +34,8 @@ val appModule = org.koin.dsl.module {
 fun provideOkHttp() =
     OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor().apply { this@apply.level = HttpLoggingInterceptor.Level.BODY })
-        .readTimeout(Duration.ofMinutes(1))
-        .connectTimeout(Duration.ofMinutes(1))
+        .readTimeout(1, TimeUnit.MINUTES)
+        .connectTimeout(1, TimeUnit.MINUTES)
         .build()
 
 fun provideRetrofit() =

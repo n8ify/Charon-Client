@@ -11,6 +11,8 @@
             android:textStyle="bold"
             android:textSize="36dp"
             android:text="..."
-            android:gravity="center"/>
+            android:gravity="center"
+            android:minWidth="72dp"
+            android:minHeight="72dp"/>
 
 </LinearLayout>

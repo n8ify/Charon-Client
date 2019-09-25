@@ -43,11 +43,12 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
             }
 
             override fun onTick(millisUntilFinished: Long) {
+
                 val secondLeft = millisUntilFinished / 1000
+
                 Timber.i("Second left : %d ", secondLeft)
-                if (secondLeft != 0L) {
-                    tv_timer.text = secondLeft.toString()
-                }
+                tv_timer.text = secondLeft.toString()
+
                 if(secondLeft <= 5){
                     playTimeoutTickSound()
                 }
@@ -55,14 +56,11 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         }
     }
 
-    lateinit var guessCardFragment: GuessFragment
-    lateinit var guessCard : View
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_guess)
-
         itemViewModel.guessQueue.observe(this, androidx.lifecycle.Observer {
             Timber.i("Remaining : %s", it.size)
             Timber.i("Left(s) : %s", it)
@@ -101,6 +99,7 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
                 prepareAndStart()
             }
         })
+
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -145,26 +144,19 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
     }
 
     private fun nextGuess(item: Item) {
-
-        guessCardFragment = GuessFragment.newInstance(item)
-        replaceFragment(guessCardFragment)
-
-//        if(::guessCard.isInitialized){
-//            ll_item_container.removeAllViews()
-//        }
-//
-//        guessCard = LayoutInflater.from(this@GuessActivity).inflate(R.layout.card_guess_item, null)
-//        guessCard.tv_guess_item.text = item.value
-//        ll_item_container.addView(guessCard)
-
+        replaceFragment(GuessFragment.newInstance(item))
     }
 
     private fun definedPostAction(){
+        // Note : Check if queue is empty, true -> immediately show result, false -> go to next guess.
+        if(itemViewModel.guessQueue.value?.isEmpty() == true){
+            showResult()
+        }
+
+        // Note : Peek a next item and make it as a next guess item.
         itemViewModel.guessQueue.value?.peek().let {
             if (it != null) {
                 nextGuess(it)
-            } else {
-                showResult()
             }
         }
     }
@@ -203,8 +195,8 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         countDownTimer.cancel()
+        super.onDestroy()
     }
 
     private fun replaceFragment(fragment : Fragment){
@@ -214,17 +206,4 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
             .commit()
     }
 
-    private fun addFragment(fragment : Fragment){
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.ll_item_container, fragment)
-            .commit()
-    }
-
-    private fun removeFragment(fragment : Fragment){
-        supportFragmentManager
-            .beginTransaction()
-            .remove(fragment)
-            .commit()
-    }
 }

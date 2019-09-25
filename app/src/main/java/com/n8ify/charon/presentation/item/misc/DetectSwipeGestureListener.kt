@@ -8,20 +8,15 @@ class DetectSwipeGestureListener : GestureDetector.SimpleOnGestureListener() {
 
     companion object {
 
-        lateinit var detectSwipeGestureListener : DetectSwipeGestureListener
-
-        fun getInstance(listener : OnDirectionChangeListener) : DetectSwipeGestureListener {
-            if(!::detectSwipeGestureListener.isInitialized){
-                detectSwipeGestureListener = DetectSwipeGestureListener().apply {
-                    this@apply.listener = listener
-                }
+        fun getInstance(listener: OnDirectionChangeListener): DetectSwipeGestureListener {
+            return DetectSwipeGestureListener().apply {
+                this@apply.listener = listener
             }
-            return detectSwipeGestureListener
         }
 
     }
 
-    private lateinit var listener : OnDirectionChangeListener
+    private lateinit var listener: OnDirectionChangeListener
 
     override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
 
@@ -39,14 +34,14 @@ class DetectSwipeGestureListener : GestureDetector.SimpleOnGestureListener() {
             val absDeltaY = Math.abs(it.first.y - it.second.y)
 
             if (absDeltaX.toInt() in MIN_X_DISTANCE..MAX_X_DISTANCE) {
-                if(deltaX < 0){
+                if (deltaX < 0) {
                     listener.onRight()
                 } else {
                     listener.onLeft()
                 }
             }
-            if(absDeltaY.toInt() in MIN_Y_DISTANCE..MAX_Y_DISTANCE){
-                if(deltaY < 0){
+            if (absDeltaY.toInt() in MIN_Y_DISTANCE..MAX_Y_DISTANCE) {
+                if (deltaY < 0) {
                     listener.onDown()
                 } else {
                     listener.onUp()
@@ -67,10 +62,10 @@ class DetectSwipeGestureListener : GestureDetector.SimpleOnGestureListener() {
 
     interface OnDirectionChangeListener {
 
-        fun onUp() : Unit
-        fun onDown() : Unit
-        fun onLeft() : Unit
-        fun onRight() : Unit
+        fun onUp(): Unit
+        fun onDown(): Unit
+        fun onLeft(): Unit
+        fun onRight(): Unit
 
     }
 

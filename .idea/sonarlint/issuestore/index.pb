@@ -49,8 +49,6 @@ g
 7app/src/main/java/com/n8ify/charon/model/entity/Item.kt,3/a/3a4e5555e9c6ddfa2b287511bfe03ca1e110d381
 f
 6app/src/main/java/com/n8ify/charon/module/AppModule.kt,d/4/d498ca08486a1116a9f77789988703880810ff09
-
-Oapp/src/main/java/com/n8ify/charon/presentation/item/viewmodel/ItemViewModel.kt,9/1/919e477483256ba2b198b3674521b6cc88e93f22
 t
 Dapp/src/main/java/com/n8ify/charon/data/repository/ItemRepository.kt,4/1/41fab1125060779aba70ab24809e59fdff9338e9
 Å
@@ -89,3 +87,5 @@ Xapp/src/main/java/com/n8ify/charon/presentation/item/viewholder/GuessResultView
 Napp/src/main/java/com/n8ify/charon/presentation/item/fragment/GuessFragment.kt,8/b/8b52c10a496965aa7441b8b0fc94e4e0e058bd36
 Ö
 Uapp/src/main/java/com/n8ify/charon/presentation/item/fragment/ResultDialogFragment.kt,f/c/fc2eca89e5e9c14d9d158addefad11858aaf61b1
+Ä
+Papp/src/main/java/com/n8ify/charon/presentation/_base/viewmodel/ItemViewModel.kt,1/a/1a597318a5f23892a93de733445bd304d138da07

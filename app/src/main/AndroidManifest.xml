@@ -14,7 +14,8 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".presentation.item.activity.GuessActivity"
                   android:screenOrientation="landscape"
-                  android:noHistory="true">
+                  android:noHistory="true"
+                  android:launchMode="singleTop">
         </activity>
         <activity
                 android:name=".presentation.main.activity.MainActivity"
