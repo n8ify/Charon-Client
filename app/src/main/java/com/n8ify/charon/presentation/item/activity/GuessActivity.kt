@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.n8ify.charon.R
 import com.n8ify.charon.constant.CommonConstant
 import com.n8ify.charon.model.entity.Item
@@ -110,6 +111,8 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
 
     override fun onUp() {
         if(!isCounting){ return }
+        if(itemViewModel.guessQueue.value?.isEmpty() == true){ showResult() ; return }
+
         itemViewModel.guessQueue.value?.remove()?.let {
             println("Correct! ${itemViewModel.guessQueue.value}")
             itemViewModel.correct(it)
@@ -123,6 +126,8 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
 
     override fun onDown() {
         if(!isCounting){ return }
+        if(itemViewModel.guessQueue.value?.isEmpty() == true){ showResult() ; return }
+
         itemViewModel.guessQueue.value?.remove()?.let {
             println("Skip! ${itemViewModel.guessQueue.value}")
             itemViewModel.skip(it)
@@ -162,6 +167,7 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
     }
 
     private fun showResult() {
+        countDownTimer.cancel()
         val resultDialogFragment =
             ResultDialogFragment.newInstance(itemViewModel.guessQueueResult, itemViewModel.guessQueueSize)
         supportFragmentManager
@@ -203,6 +209,7 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.ll_item_container, fragment)
+            .setTransition(FragmentTransaction.TRANSIT_ENTER_MASK)
             .commit()
     }
 
