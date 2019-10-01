@@ -20,7 +20,8 @@
                 android:textStyle="bold"
                 android:textSize="18dp"
                 android:text="$Result"
-                android:layout_weight="0.1"/>
+                android:layout_weight="0.1"
+                android:visibility="gone"/>
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_result"

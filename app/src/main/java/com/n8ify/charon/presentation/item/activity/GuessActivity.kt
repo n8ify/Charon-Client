@@ -1,14 +1,14 @@
 package com.n8ify.charon.presentation.item.activity
 
+import android.animation.ObjectAnimator
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.MotionEvent
-import android.view.View
 import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import com.n8ify.charon.R
 import com.n8ify.charon.constant.CommonConstant
 import com.n8ify.charon.model.entity.Item
@@ -59,7 +59,6 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_guess)
         itemViewModel.guessQueue.observe(this, androidx.lifecycle.Observer {
@@ -78,6 +77,20 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
             itemViewModel.guessQueue.value?.let { guessItems ->
                 nextGuess(guessItems.peek())
             }
+
+//            itemViewModel.initialSensor().also {
+//                itemViewModel.accY.observe(this@GuessActivity, Observer {deltaY ->
+//
+//                    if(deltaY >= 0.6F){
+//                        onUp()
+//                    }
+//                    if(deltaY <= 0.3){
+//                        onDown()
+//                    }
+//
+//                })
+//            }
+
             playStartTimeSound()
         }
 
@@ -89,7 +102,6 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
     }
 
     override fun initView() {
-        tv_timer?.bringToFront()
     }
 
     override fun initObserver(vararg baseViewModels: BaseViewModel) {
@@ -209,7 +221,7 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.ll_item_container, fragment)
-            .setTransition(FragmentTransaction.TRANSIT_ENTER_MASK)
+            .addToBackStack(null)
             .commit()
     }
 

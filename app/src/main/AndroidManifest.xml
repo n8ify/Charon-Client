@@ -12,10 +12,15 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".presentation.item.activity.GuessActivity"
-                  android:screenOrientation="landscape"
+        <activity android:name=".presentation._base.activity.ErrorActivity"
                   android:noHistory="true"
-                  android:launchMode="singleTop">
+                  android:screenOrientation="landscape">
+        </activity>
+        <activity
+                android:name=".presentation.item.activity.GuessActivity"
+                android:launchMode="singleTop"
+                android:noHistory="true"
+                android:screenOrientation="landscape">
         </activity>
         <activity
                 android:name=".presentation.main.activity.MainActivity"

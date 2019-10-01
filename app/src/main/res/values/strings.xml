@@ -22,6 +22,7 @@
     <string name="back">กลับ</string>
     <string name="cancel">ยกเลิก</string>
     <string name="timeup">หมดเวลา!</string>
+    <string name="exception">พบข้อผิดพลาด!</string>
 
     <string name="status_correct">ทายถูก</string>
     <string name="status_skip">ข้าม</string>
