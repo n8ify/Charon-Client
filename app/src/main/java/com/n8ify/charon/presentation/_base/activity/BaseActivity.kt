@@ -1,6 +1,7 @@
 package com.n8ify.charon.presentation._base.activity
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -21,6 +22,7 @@ abstract class BaseActivity : AppCompatActivity() {
         initView()
         initObserver()
     }
+
 
     open fun initView() {}
     open fun initObserver(vararg baseViewModels: BaseViewModel) {

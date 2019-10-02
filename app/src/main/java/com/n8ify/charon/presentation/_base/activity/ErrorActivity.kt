@@ -12,7 +12,4 @@ class ErrorActivity : BaseActivity() {
         setContentView(R.layout.activity_error)
     }
 
-    override fun initView() {
-        tv_error_message.text = intent.getStringExtra("exception")
-    }
 }

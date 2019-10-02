@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="$ErrorMessage" app:layout_constraintStart_toStartOf="@+id/tv_error_title"
+            android:text="@string/went_wrong" app:layout_constraintStart_toStartOf="@+id/tv_error_title"
             app:layout_constraintEnd_toEndOf="@+id/tv_error_title" android:layout_marginEnd="8dp"
             app:layout_constraintHorizontal_bias="0.0" app:layout_constraintTop_toBottomOf="@+id/tv_error_title"
             android:layout_marginTop="16dp"/>

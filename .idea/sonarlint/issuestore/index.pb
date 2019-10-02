@@ -89,3 +89,7 @@ Napp/src/main/java/com/n8ify/charon/presentation/item/fragment/GuessFragment.kt
 Uapp/src/main/java/com/n8ify/charon/presentation/item/fragment/ResultDialogFragment.kt,f/c/fc2eca89e5e9c14d9d158addefad11858aaf61b1
 €
 Papp/src/main/java/com/n8ify/charon/presentation/_base/viewmodel/ItemViewModel.kt,1/a/1a597318a5f23892a93de733445bd304d138da07
+
+Oapp/src/main/java/com/n8ify/charon/presentation/_base/activity/ErrorActivity.kt,b/1/b12a89667abb066c07d3f7906a767a3fdc2f75e7
+<
+build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
