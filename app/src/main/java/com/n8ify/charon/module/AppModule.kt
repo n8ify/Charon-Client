@@ -4,8 +4,10 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.n8ify.charon.data.api.CategoryAPI
 import com.n8ify.charon.data.api.ItemAPI
 import com.n8ify.charon.data.repository.CategoryRepository
+import com.n8ify.charon.data.repository.HistoryRepository
 import com.n8ify.charon.data.repository.ItemRepository
 import com.n8ify.charon.data.repository.impl.CategoryRepositoryImpl
+import com.n8ify.charon.data.repository.impl.HistoryRepositoryImpl
 import com.n8ify.charon.data.repository.impl.ItemRepositoryImpl
 import com.n8ify.charon.presentation._base.viewmodel.CategoryViewModel
 import com.n8ify.charon.presentation._base.viewmodel.ItemViewModel
@@ -22,10 +24,12 @@ val appModule = org.koin.dsl.module {
     single { provideRetrofit().create(ItemAPI::class.java) }
     factory<CategoryRepository> { CategoryRepositoryImpl(categoryAPI = get()) }
     factory<ItemRepository> { ItemRepositoryImpl(itemAPI = get()) }
+    factory<HistoryRepository> { HistoryRepositoryImpl() }
     viewModel { CategoryViewModel(categoryRepository = get(), application = get()) }
     viewModel {
         ItemViewModel(
             itemRepository = get(),
+            historyRepository = get(),
             application = get()
         )
     }

@@ -6,7 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presentation.main.activity.MainActivity"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:onClick="clickCaptured">
 
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_category"

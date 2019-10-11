@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.lifecycle.MutableLiveData
 import com.n8ify.charon.constant.RemoteConfigConstant
+import com.n8ify.charon.data.repository.HistoryRepository
 import com.n8ify.charon.data.repository.ItemRepository
 import com.n8ify.charon.model.entity.Item
 import com.n8ify.charon.model.misc.UseCaseResult
@@ -17,7 +18,7 @@ import timber.log.Timber
 import java.util.concurrent.LinkedBlockingQueue
 import kotlin.coroutines.CoroutineContext
 
-class ItemViewModel(private val itemRepository: ItemRepository, application: Application) : BaseViewModel(application),
+class ItemViewModel(private val itemRepository: ItemRepository, private val historyRepository: HistoryRepository, application: Application) : BaseViewModel(application),
     CoroutineScope {
 
     val guessQueue by lazy { MutableLiveData<LinkedBlockingQueue<Item>>().apply { this.value = LinkedBlockingQueue() } }
@@ -78,6 +79,21 @@ class ItemViewModel(private val itemRepository: ItemRepository, application: App
                 }
             }
             isOnProgress.value = false
+        }
+    }
+
+    fun endgame(categoryName : String){
+        launch {
+            when(val useCase = withContext(Dispatchers.IO){
+                historyRepository.insertHistoryAndResult(categoryName, guessQueueResult)
+            }){
+                is UseCaseResult.Success -> {
+                    Timber.i("Inserted! %s", useCase.result.toString())
+                }
+                is UseCaseResult.Error -> {
+                    useCase.t.printStackTrace()
+                }
+            }
         }
     }
 

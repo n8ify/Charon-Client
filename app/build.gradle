@@ -4,7 +4,10 @@ apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
+
 apply plugin: 'com.google.gms.google-services'
+
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -48,7 +51,7 @@ dependencies {
     // Lifecycle library
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0-alpha02'
     implementation 'com.google.firebase:firebase-config:16.1.0'
-    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.1.0-alpha02'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.1.0-alpha02'
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -63,6 +66,13 @@ dependencies {
     def koin_version = '2.0.1'
     implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
+
+    // Room
+    def room_version = "2.2.0-rc01"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

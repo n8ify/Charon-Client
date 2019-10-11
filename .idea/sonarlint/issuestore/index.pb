@@ -93,3 +93,23 @@ Papp/src/main/java/com/n8ify/charon/presentation/_base/viewmodel/ItemViewModel.k
 Oapp/src/main/java/com/n8ify/charon/presentation/_base/activity/ErrorActivity.kt,b/1/b12a89667abb066c07d3f7906a767a3fdc2f75e7
 <
 build.gradle,f/0/f07866736216be0ee2aba49e392191aeae700a35
+s
+Capp/src/main/java/com/n8ify/charon/model/entity/HistoryAndResult.kt,5/6/56f65d75253ad39dda2341859e6b3ce9994f91f9
+w
+Gapp/src/main/java/com/n8ify/charon/data/repository/HistoryRepository.kt,2/7/2760d51bba9b3bb243f390a706649d6266da292a
+o
+?app/src/main/java/com/n8ify/charon/data/room/CentralDatabase.kt,5/3/53f4dc93eb22fe9c854ddd82a26748c6d74778ae
+q
+Aapp/src/main/java/com/n8ify/charon/data/room/dao/_base/BaseDao.kt,1/7/1794a2ce3989bc36df8fe3e34f50d53804360257
+m
+=app/src/main/java/com/n8ify/charon/data/room/dao/ResultDao.kt,f/f/ffbbf38e74d2db1c9a7e500796de65286ac4aa4e
+€
+Papp/src/main/java/com/n8ify/charon/data/repository/impl/HistoryRepositoryImpl.kt,e/0/e0df1f4b86057a81b4de9ac16f4382aa7faffd71
+n
+>app/src/main/java/com/n8ify/charon/data/room/dao/HistoryDao.kt,8/f/8fc4a96c2b78a8610264d531f227a09c8cb75a73
+i
+9app/src/main/java/com/n8ify/charon/model/entity/Result.kt,b/d/bd201f9558d88656b03fc4d3323c51ff7831074c
+j
+:app/src/main/java/com/n8ify/charon/model/entity/History.kt,2/f/2f6dba1cdcd1c6d4d46c2e418a8615e023409cb9
+A
+fastlane/Fastfile,9/f/9f0f12aa0bd74d8115ab3d187b7d8ddcfcc1cc70

@@ -182,6 +182,12 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         countDownTimer.cancel()
         val resultDialogFragment =
             ResultDialogFragment.newInstance(itemViewModel.guessQueueResult, itemViewModel.guessQueueSize)
+
+        // Save result to local database.
+        intent.extras.getString("categoryName")?.let {
+            itemViewModel.endgame(it)
+        }
+
         supportFragmentManager
             .beginTransaction()
             .add(resultDialogFragment, resultDialogFragment.TAG)
