@@ -76,10 +76,6 @@ class MainActivity : BaseActivity(), CategoryViewHolder.CategoryContext {
 //                Timber.i("\n- - - - - - - - - - - - - - - \n")
 //            }
 //        }
-//
-//        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this@MainActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
-//        }
 
 
     }
@@ -119,60 +115,4 @@ class MainActivity : BaseActivity(), CategoryViewHolder.CategoryContext {
 
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
-        if (resultCode != Activity.RESULT_OK) {
-            return
-        }
-
-        when (requestCode) {
-            1 -> {
-                data?.let {
-                    File(it.extras.getString("path")).delete().also { isDeleted ->
-                        if (isDeleted) {
-                            Timber.i("Deleted!")
-                        }
-                    }
-                }
-            }
-        }
-
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (permissions[0] == Manifest.permission.WRITE_EXTERNAL_STORAGE) {
-            Timber.i("Write Granted!")
-        }
-    }
-
-
-    fun clickCaptured(v: View) {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { imageCaptureIntent ->
-            imageCaptureIntent.resolveActivity(packageManager)?.also {
-
-                var path = ""
-
-                val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-                val storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-                val tempFile = File.createTempFile("JPEG_$timestamp", ".jpg", storageDir).also {
-                    path = it.absolutePath
-                }
-
-
-                tempFile.also {
-                    val fileUrl = FileProvider.getUriForFile(this@MainActivity, "com.example.android.fileprovider", it)
-                    imageCaptureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileUrl)
-                    imageCaptureIntent.putExtra("path", it.absolutePath)
-                    startActivityForResult(imageCaptureIntent, 1)
-                }
-
-                Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
-                    val f = File(path)
-                    mediaScanIntent.data = Uri.fromFile(f)
-                    sendBroadcast(mediaScanIntent)
-                }
-            }
-        }
-    }
 }

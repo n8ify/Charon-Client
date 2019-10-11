@@ -1,5 +1,6 @@
 package com.n8ify.charon.module
 
+import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.n8ify.charon.data.api.CategoryAPI
 import com.n8ify.charon.data.api.ItemAPI
@@ -47,5 +48,5 @@ fun provideRetrofit() =
         .client(provideOkHttp())
         .baseUrl(com.n8ify.charon.BuildConfig.BASE_URL)
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create()))
         .build()
