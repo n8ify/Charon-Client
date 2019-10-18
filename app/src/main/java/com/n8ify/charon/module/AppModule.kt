@@ -12,6 +12,7 @@ import com.n8ify.charon.data.repository.impl.HistoryRepositoryImpl
 import com.n8ify.charon.data.repository.impl.ItemRepositoryImpl
 import com.n8ify.charon.presentation._base.viewmodel.CategoryViewModel
 import com.n8ify.charon.presentation._base.viewmodel.ItemViewModel
+import com.n8ify.charon.presentation._base.viewmodel.SensorViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -34,6 +35,7 @@ val appModule = org.koin.dsl.module {
             application = get()
         )
     }
+    viewModel { SensorViewModel(application = get()) }
 }
 
 fun provideOkHttp() =

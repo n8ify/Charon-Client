@@ -19,6 +19,7 @@ import com.n8ify.charon.presentation.item.fragment.PrepareFragment
 import com.n8ify.charon.presentation.item.fragment.ResultDialogFragment
 import com.n8ify.charon.presentation.item.misc.DetectSwipeGestureListener
 import com.n8ify.charon.presentation._base.viewmodel.ItemViewModel
+import com.n8ify.charon.presentation._base.viewmodel.SensorViewModel
 import kotlinx.android.synthetic.main.activity_guess.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -27,6 +28,7 @@ import java.lang.Exception
 class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChangeListener, ResultDialogFragment.ResultCallback {
 
     private val itemViewModel: ItemViewModel by viewModel()
+    private val sensorViewModel : SensorViewModel by viewModel()
 
     private val gestureCompat by lazy {
         GestureDetectorCompat(this@GuessActivity, DetectSwipeGestureListener.getInstance(this@GuessActivity))
@@ -65,7 +67,11 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
             Timber.i("Remaining : %s", it.size)
             Timber.i("Left(s) : %s", it)
         }).also { itemViewModel.getItem(intent.extras.getInt("categoryId")) }
-
+        sensorViewModel.accZ.observe(this@GuessActivity, Observer {
+            Timber.d("Z : $it")
+        }).also {
+            sensorViewModel.initialSensor()
+        }
     }
 
     private fun prepareAndStart() {
@@ -112,6 +118,7 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
                 prepareAndStart()
             }
         })
+
 
     }
 
@@ -218,6 +225,10 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         MediaPlayer.create(this@GuessActivity, R.raw.skip).start()
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
+
     override fun onDestroy() {
         countDownTimer.cancel()
         super.onDestroy()
@@ -232,3 +243,4 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
     }
 
 }
+

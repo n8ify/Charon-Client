@@ -25,37 +25,6 @@ class ItemViewModel(private val itemRepository: ItemRepository, private val hist
     val guessQueueResult by lazy { LinkedBlockingQueue<Pair<Item, Boolean>>() }
     var guessQueueSize: Int = 0
 
-    private val sensorManager = (getApplication<BaseApplication>().getSystemService(Context.SENSOR_SERVICE) as SensorManager)
-    private val accelerationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
-    private val accelerationListener = object : SensorEventListener {
-
-        var actualTime : Long = System.currentTimeMillis()
-
-        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
-
-        override fun onSensorChanged(event: SensorEvent?) {
-
-            event?.let {
-
-            if(event.timestamp - actualTime > 2000000000){
-                return@let
-            }
-                accX.value = it.values[0]
-                accY.value = it.values[1]
-                accZ.value = it.values[2]
-
-                actualTime = event.timestamp
-
-                println("y = ${accY.value}")
-
-            }
-        }
-    }
-
-    val accX = MutableLiveData<Float>()
-    val accY = MutableLiveData<Float>()
-    val accZ = MutableLiveData<Float>()
-
     private val job = Job()
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main.plus(job)
@@ -103,20 +72,5 @@ class ItemViewModel(private val itemRepository: ItemRepository, private val hist
 
     fun skip(item: Item) {
         guessQueueResult.add(item to false)
-    }
-
-    fun initialSensor() {
-        sensorManager.registerListener(accelerationListener, accelerationSensor, SensorManager.SENSOR_DELAY_NORMAL)
-
-    }
-
-    fun terminateSensor(){
-        sensorManager.unregisterListener(accelerationListener)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        terminateSensor()
-
     }
 }
