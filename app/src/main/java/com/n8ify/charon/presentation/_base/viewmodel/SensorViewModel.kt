@@ -18,7 +18,7 @@ class SensorViewModel(application : Application): BaseViewModel(application) {
     val accZ = MutableLiveData<Float>()
 
     private val sensorManager = (getApplication<BaseApplication>().getSystemService(Context.SENSOR_SERVICE) as SensorManager)
-    private val accelerationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)
+    private val accelerationSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GAME_ROTATION_VECTOR)
     private val accelerationListener = object : SensorEventListener {
 
         override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}

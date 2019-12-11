@@ -4,7 +4,9 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ee80a16a23f76f2caed908cf21ba8b40/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ee80a16a23f76f2caed908cf21ba8b40/res" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.koin/koin-androidx-scope/2.0.1/58b83cf4dfb9fef2f59e19e55ae8830e03701236/koin-androidx-scope-2.0.1-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.koin/koin-androidx-scope/2.0.1/839060c41d5ef78525855d912e794f9d6854870/koin-androidx-scope-2.0.1-sources.jar!/" />
     </SOURCES>

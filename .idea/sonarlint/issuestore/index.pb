@@ -113,3 +113,7 @@ j
 :app/src/main/java/com/n8ify/charon/model/entity/History.kt,2/f/2f6dba1cdcd1c6d4d46c2e418a8615e023409cb9
 A
 fastlane/Fastfile,9/f/9f0f12aa0bd74d8115ab3d187b7d8ddcfcc1cc70
+|
+Lapp/src/main/java/com/n8ify/charon/model/rest/response/_base/BaseResponse.kt,b/0/b0276911a37e2f616bec021c1d769c28815d5050
+‚
+Rapp/src/main/java/com/n8ify/charon/presentation/_base/viewmodel/SensorViewModel.kt,7/0/70973cf30cf90665e9389ed49309f51bbb3c3742

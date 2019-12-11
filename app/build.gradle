@@ -11,12 +11,13 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "com.n8ify.charon"
-        minSdkVersion 23
+        minSdkVersion 14
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 9
+        versionName "1.09"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -29,7 +30,8 @@ android {
         }
 
         release {
-            minifyEnabled false
+            minifyEnabled true
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField("String", "BASE_URL", "\"https://char-ron.herokuapp.com/\"")
         }
