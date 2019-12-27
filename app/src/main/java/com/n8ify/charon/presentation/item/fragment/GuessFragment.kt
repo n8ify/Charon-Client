@@ -10,6 +10,7 @@ import com.n8ify.charon.model.entity.Item
 import com.n8ify.charon.presentation._base.fragment.BaseFragment
 import kotlinx.android.synthetic.main.card_guess_item.view.*
 
+@Deprecated("Use GuessedItemLayout instead")
 class GuessFragment : BaseFragment() {
 
     val TAG = GuessFragment::class.java.simpleName
