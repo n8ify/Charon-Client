@@ -88,7 +88,7 @@ class MainActivity : BaseActivity(), CategoryViewHolder.CategoryContext {
                 this@apply.layoutManager = GridLayoutManager(applicationContext, 3)
                 this@apply.adapter = CategoryAdapter.getInstance(categories)
             }
-
+            dismissProgressDialog()
         }).also { categoryViewModel.getTotalCategories() }
 
     }

@@ -37,7 +37,7 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         val timeCount = try { intent.extras.getInt("timeCount") * CommonConstant.MILLISECOND } catch(e: Exception) {CommonConstant.DEFAULT_ROUND_TIME_MILLISECOND}
         object : CountDownTimer(timeCount, 1000) {
             override fun onFinish() {
-                Toast.makeText(this@GuessActivity, "Timeout!", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@GuessActivity, "หมดเวลา!", Toast.LENGTH_LONG).show()
                 showResult()
                 playTimeUpSound()
                 isCounting = false
@@ -166,6 +166,9 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
     }
 
     private fun nextGuess(item: Item) {
+        if(fl_container.childCount != 0){
+            fl_container.removeAllViews()
+        }
         val guessedItemView = GuessedItemView(context = this@GuessActivity, item = item)
         fl_container.addView(guessedItemView)
     }

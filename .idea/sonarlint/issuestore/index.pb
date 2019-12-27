@@ -30,7 +30,7 @@ n
 @
 app/build.gradle,f/4/f4a01d6a4fcb971362ec00a83903fd3902f52164
 Ö
-Uapp/src/main/java/com/n8ify/charon/presentation/main/viewholder/CategoryViewHolder.kt,8/2/8255db244960ca13218869c31680211905984126
+Uapp/src/main/java/com/n8ify/charon/presentation/main/viewholder/CategoryViewHolder.kt,8\2\8255db244960ca13218869c31680211905984126
 
 Oapp/src/main/java/com/n8ify/charon/presentation/main/adapter/CategoryAdapter.kt,c/c/ccff1ab4183a304b885beb98636ab036cec3174e
 j
@@ -42,13 +42,13 @@ Oapp/src/main/java/com/n8ify/charon/presentation/_base/fragment/LoadingDialog.kt
 Ä
 Papp/src/main/java/com/n8ify/charon/presentation/_base/viewmodel/BaseViewModel.kt,d/8/d8e1c095ac0422f05152c31c775e7a4c50d5533a
 r
-Bapp/src/main/java/com/n8ify/charon/presentation/BaseApplication.kt,8/5/85da4662e300c989d0bcfeeeb4a8a5b019a602da
+Bapp/src/main/java/com/n8ify/charon/presentation/BaseApplication.kt,8\5\85da4662e300c989d0bcfeeeb4a8a5b019a602da
 Ñ
 Tapp/src/main/java/com/n8ify/charon/presentation/_base/viewmodel/CategoryViewModel.kt,b/8/b8ed01d3c7e2b85a5f65c00ba150527009d6b77b
 g
 7app/src/main/java/com/n8ify/charon/model/entity/Item.kt,3/a/3a4e5555e9c6ddfa2b287511bfe03ca1e110d381
 f
-6app/src/main/java/com/n8ify/charon/module/AppModule.kt,d/4/d498ca08486a1116a9f77789988703880810ff09
+6app/src/main/java/com/n8ify/charon/module/AppModule.kt,d\4\d498ca08486a1116a9f77789988703880810ff09
 t
 Dapp/src/main/java/com/n8ify/charon/data/repository/ItemRepository.kt,4/1/41fab1125060779aba70ab24809e59fdff9338e9
 Å
@@ -58,11 +58,11 @@ Mapp/src/main/java/com/n8ify/charon/data/repository/impl/ItemRepositoryImpl.kt,
 P
  app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
 f
-6app/src/main/java/com/n8ify/charon/data/api/ItemAPI.kt,4/5/451bc2daefe95f9f3498342ceeadab44da38524d
+6app/src/main/java/com/n8ify/charon/data/api/ItemAPI.kt,4\5\451bc2daefe95f9f3498342ceeadab44da38524d
 á
 Wapp/src/main/java/com/n8ify/charon/presentation/item/misc/DetectSwipeGestureListener.kt,d/2/d231106782cd6f085ead1399c7dd287a9cccf245
 }
-Mapp/src/main/java/com/n8ify/charon/presentation/main/activity/MainActivity.kt,d/c/dc45b8a253b33a02a3454c3f6159f004a453a040
+Mapp/src/main/java/com/n8ify/charon/presentation/main/activity/MainActivity.kt,d\c\dc45b8a253b33a02a3454c3f6159f004a453a040
 á
 Wapp/src/main/java/com/n8ify/charon/model/rest/response/category/ListCategoryResponse.kt,6/9/698a6ba1958eb895b145b3a4b1d12c16b0dec078
 â
@@ -70,7 +70,7 @@ Yapp/src/main/java/com/n8ify/charon/model/rest/response/category/SingleCategoryR
 ~
 Napp/src/main/java/com/n8ify/charon/presentation/_base/activity/BaseActivity.kt,b/b/bbe713626e2f80d164b47c5fed5a5b2b11883800
 ~
-Napp/src/main/java/com/n8ify/charon/presentation/item/activity/GuessActivity.kt,5/9/59140fbc38b68e673b1b382b49b89868bcff5ba1
+Napp/src/main/java/com/n8ify/charon/presentation/item/activity/GuessActivity.kt,5\9\59140fbc38b68e673b1b382b49b89868bcff5ba1
 s
 Capp/src/main/java/com/n8ify/charon/constant/RemoteConfigConstant.kt,0/8/0831f5717209bd699f25825dc202fd57472ad61e
 m
@@ -84,7 +84,7 @@ Rapp/src/main/java/com/n8ify/charon/presentation/item/adapter/GuessResultAdapter
 à
 Xapp/src/main/java/com/n8ify/charon/presentation/item/viewholder/GuessResultViewHolder.kt,3/e/3e0552327af2a8f4835e45c9b8a07fd7b6d56087
 ~
-Napp/src/main/java/com/n8ify/charon/presentation/item/fragment/GuessFragment.kt,8/b/8b52c10a496965aa7441b8b0fc94e4e0e058bd36
+Napp/src/main/java/com/n8ify/charon/presentation/item/fragment/GuessFragment.kt,8\b\8b52c10a496965aa7441b8b0fc94e4e0e058bd36
 Ö
 Uapp/src/main/java/com/n8ify/charon/presentation/item/fragment/ResultDialogFragment.kt,f/c/fc2eca89e5e9c14d9d158addefad11858aaf61b1
 Ä
@@ -117,3 +117,5 @@ A
 Lapp/src/main/java/com/n8ify/charon/model/rest/response/_base/BaseResponse.kt,b/0/b0276911a37e2f616bec021c1d769c28815d5050
 Ç
 Rapp/src/main/java/com/n8ify/charon/presentation/_base/viewmodel/SensorViewModel.kt,7/0/70973cf30cf90665e9389ed49309f51bbb3c3742
+z
+Japp/src/main/java/com/n8ify/charon/presentation/_widget/GuessedItemView.kt,7\6\76075f7b1ebecc18c25931ae0812ddd26d7834eb

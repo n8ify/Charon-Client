@@ -11,6 +11,7 @@ import com.n8ify.charon.R
 import com.n8ify.charon.model.entity.Item
 import com.n8ify.charon.presentation.item.adapter.GuessResultAdapter
 import kotlinx.android.synthetic.main.dialog_result.view.*
+import java.text.DecimalFormat
 import java.util.concurrent.LinkedBlockingQueue
 
 class ResultDialogFragment : DialogFragment() {
@@ -40,6 +41,8 @@ class ResultDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val resultSize = guessItemResult.size
         val correctCount = guessItemResult.count { it.second }
+        val skipCount = guessItemResult.count { it.second.not() }
+        val successRate = DecimalFormat("##0.0").format((correctCount.toFloat() / resultSize.toFloat()) * 100) + "%"
         view?.let {
             it.tv_result.text =
                 getString(R.string.timeup)
@@ -47,14 +50,15 @@ class ResultDialogFragment : DialogFragment() {
                 this@apply.layoutManager = LinearLayoutManager(context)
                 this@apply.adapter = GuessResultAdapter.newInstance(guessItemResult)
             }
-            it.btn_back.setOnClickListener {
+            it.imv_close.setOnClickListener {
                 if(activity is ResultCallback){
                     (activity as ResultCallback).onBackClick()
                 }
             }
+            it.tv_finale_summary.text = getString(R.string.result_finale_summary, correctCount, skipCount, successRate)
             Handler().postDelayed({
                 activity?.runOnUiThread {
-                    it.btn_back.isEnabled = true
+                    it.imv_close.isEnabled = true
                 }
             }, 3000)
         }

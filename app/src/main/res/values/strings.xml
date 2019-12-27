@@ -16,6 +16,7 @@
     <string name="result_message_feedback_a">เกรด A</string>
     <string name="result_message_feedback_a_plus">เกรด A+</string>
     <string name="result_message_feedback_a_plus_plus">เกรด A++</string>
+    <string name="result_finale_summary">"ตอบถูก %d คำ \/ ข้ามไป %d คำ \/ อัตราสำเร็จ %s"</string>
 
     <!-- Common -->
     <string name="loading">กำลังโหลด</string>
