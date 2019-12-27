@@ -1,25 +1,23 @@
 package com.n8ify.charon.presentation.item.activity
 
-import android.animation.ObjectAnimator
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.MotionEvent
 import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.n8ify.charon.R
 import com.n8ify.charon.constant.CommonConstant
 import com.n8ify.charon.model.entity.Item
 import com.n8ify.charon.presentation._base.activity.BaseActivity
 import com.n8ify.charon.presentation._base.viewmodel.BaseViewModel
-import com.n8ify.charon.presentation.item.fragment.GuessFragment
 import com.n8ify.charon.presentation.item.fragment.PrepareFragment
 import com.n8ify.charon.presentation.item.fragment.ResultDialogFragment
 import com.n8ify.charon.presentation.item.misc.DetectSwipeGestureListener
 import com.n8ify.charon.presentation._base.viewmodel.ItemViewModel
 import com.n8ify.charon.presentation._base.viewmodel.SensorViewModel
+import com.n8ify.charon.presentation._widget.GuessedItemView
 import kotlinx.android.synthetic.main.activity_guess.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
@@ -168,7 +166,8 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
     }
 
     private fun nextGuess(item: Item) {
-        replaceFragment(GuessFragment.newInstance(item))
+        val guessedItemView = GuessedItemView(context = this@GuessActivity, item = item)
+        fl_container.addView(guessedItemView)
     }
 
     private fun definedPostAction(){
@@ -234,13 +233,6 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         super.onDestroy()
     }
 
-    private fun replaceFragment(fragment : Fragment){
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.ll_item_container, fragment)
-            .addToBackStack(null)
-            .commit()
-    }
 
 }
 
