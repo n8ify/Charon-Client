@@ -8,7 +8,6 @@ import android.content.Intent
 import android.provider.Settings
 import com.crashlytics.android.Crashlytics
 import com.n8ify.charon.BuildConfig
-import com.n8ify.charon.data.room.CentralDatabase
 import com.n8ify.charon.module.appModule
 import com.n8ify.charon.presentation._base.activity.ErrorActivity
 import org.koin.android.ext.koin.androidContext

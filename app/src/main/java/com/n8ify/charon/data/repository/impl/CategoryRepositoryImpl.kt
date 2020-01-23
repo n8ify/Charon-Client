@@ -4,7 +4,6 @@ import com.n8ify.charon.data.api.CategoryAPI
 import com.n8ify.charon.data.repository.CategoryRepository
 import com.n8ify.charon.model.misc.UseCaseResult
 import com.n8ify.charon.model.rest.response.category.ListCategoryResponse
-import java.lang.Exception
 
 class CategoryRepositoryImpl(private val categoryAPI: CategoryAPI) : CategoryRepository {
 

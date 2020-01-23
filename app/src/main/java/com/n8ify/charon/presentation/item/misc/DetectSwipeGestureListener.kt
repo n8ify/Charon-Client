@@ -2,7 +2,6 @@ package com.n8ify.charon.presentation.item.misc
 
 import android.view.GestureDetector
 import android.view.MotionEvent
-import androidx.appcompat.app.AppCompatActivity
 
 class DetectSwipeGestureListener : GestureDetector.SimpleOnGestureListener() {
 

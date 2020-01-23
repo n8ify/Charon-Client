@@ -3,9 +3,7 @@ package com.n8ify.charon.presentation._base.activity
 import android.content.ClipData
 import android.content.ClipDescription
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.DragEvent
 import android.view.View
 import com.n8ify.charon.R
 import kotlinx.android.synthetic.main.activity_error.*

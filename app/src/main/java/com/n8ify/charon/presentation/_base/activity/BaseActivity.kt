@@ -1,15 +1,12 @@
 package com.n8ify.charon.presentation._base.activity
 
+import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.n8ify.charon.R
+import com.n8ify.charon.constant.CommonConstant
 import com.n8ify.charon.presentation._base.fragment.LoadingDialog
 import com.n8ify.charon.presentation._base.viewmodel.BaseViewModel
-import kotlinx.android.synthetic.main.activity_guess.view.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -23,6 +20,7 @@ abstract class BaseActivity : AppCompatActivity() {
         initObserver()
     }
 
+    val pref by lazy { getSharedPreferences( CommonConstant.APP_PREFERENCE_NAME, Context.MODE_PRIVATE) }
 
     open fun initView() {}
     open fun initObserver(vararg baseViewModels: BaseViewModel) {

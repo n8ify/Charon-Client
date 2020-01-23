@@ -8,4 +8,32 @@
         <key>default_item_list_policy</key>
         <value>sequence_asc</value>
     </entry>
+    <entry>
+        <key>item_attribute_hoe_max</key>
+        <value>-1</value>
+    </entry>
+    <entry>
+        <key>item_attribute_hoe_min</key>
+        <value>-1</value>
+    </entry>
+    <entry>
+        <key>item_attribute_hait_min</key>
+        <value>-1</value>
+    </entry>
+    <entry>
+        <key>item_attribute_hait_max</key>
+        <value>-1</value>
+    </entry>
+    <entry>
+        <key>item_attribute_hodt_max</key>
+        <value>-1</value>
+    </entry>
+    <entry>
+        <key>item_attribute_hodt_min</key>
+        <value>-1</value>
+    </entry>
+    <entry>
+        <key>item_attribute_random_rate</key>
+        <value>-1</value>
+    </entry>
 </defaultsMap>

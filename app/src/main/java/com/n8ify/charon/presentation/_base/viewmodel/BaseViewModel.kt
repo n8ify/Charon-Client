@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.n8ify.charon.presentation.BaseApplication
 
 abstract class BaseViewModel(application : Application) : AndroidViewModel(application) {
     val remoteConfig by lazy { FirebaseRemoteConfig.getInstance() }

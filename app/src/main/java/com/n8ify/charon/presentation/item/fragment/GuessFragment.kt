@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.n8ify.charon.R
 import com.n8ify.charon.model.entity.Item
 import com.n8ify.charon.presentation._base.fragment.BaseFragment

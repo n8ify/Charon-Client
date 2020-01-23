@@ -1,7 +1,6 @@
 package com.n8ify.charon.presentation.main.viewholder
 
 import android.view.View
-import androidx.recyclerview.widget.RecyclerView
 import com.n8ify.charon.model.entity.Category
 import com.n8ify.charon.presentation._base.activity.BaseActivity
 import com.n8ify.charon.presentation._base.viewholder.BaseViewHolder

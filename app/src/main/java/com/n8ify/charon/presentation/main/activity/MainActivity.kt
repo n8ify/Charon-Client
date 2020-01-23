@@ -1,26 +1,14 @@
 package com.n8ify.charon.presentation.main.activity
 
-import android.Manifest
-import android.app.Activity
-import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import com.crashlytics.android.Crashlytics
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.n8ify.charon.R
 import com.n8ify.charon.constant.RemoteConfigConstant
-import com.n8ify.charon.data.room.CentralDatabase
 import com.n8ify.charon.model.entity.Category
 import com.n8ify.charon.presentation._base.activity.BaseActivity
 import com.n8ify.charon.presentation._base.viewmodel.BaseViewModel
@@ -29,14 +17,8 @@ import com.n8ify.charon.presentation.item.activity.GuessActivity
 import com.n8ify.charon.presentation.main.adapter.CategoryAdapter
 import com.n8ify.charon.presentation.main.viewholder.CategoryViewHolder
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 
 class MainActivity : BaseActivity(), CategoryViewHolder.CategoryContext {
 
@@ -60,6 +42,21 @@ class MainActivity : BaseActivity(), CategoryViewHolder.CategoryContext {
                                 RemoteConfigConstant.DEFAULT_ITEM_LIST_POLICY
                             )}"
                         )
+                        pref.edit().run {
+                            putLong(RemoteConfigConstant.DEFAULT_ITEM_AMOUNT, getLong(RemoteConfigConstant.DEFAULT_ITEM_AMOUNT))
+                            putLong(RemoteConfigConstant.DEFAULT_ITEM_LIST_POLICY, getLong(RemoteConfigConstant.DEFAULT_ITEM_LIST_POLICY))
+                            putLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MIN, getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MIN))
+                            putLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MAX, getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MAX))
+                            putLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MIN, getLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MIN))
+                            putLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MAX, getLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MAX))
+                            putLong(RemoteConfigConstant.IA_HURRY_OR_END_MIN, getLong(RemoteConfigConstant.IA_HURRY_OR_END_MIN))
+                            putLong(RemoteConfigConstant.IA_HURRY_OR_END_MAX, getLong(RemoteConfigConstant.IA_HURRY_OR_END_MAX))
+                            putLong(RemoteConfigConstant.IA_RANDOM_RATE, getLong(RemoteConfigConstant.IA_RANDOM_RATE))
+                            putLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_WEIGHT, getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_WEIGHT))
+                            putLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_WEIGHT, getLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_WEIGHT))
+                            putLong(RemoteConfigConstant.IA_HURRY_OR_END_WEIGHT, getLong(RemoteConfigConstant.IA_HURRY_OR_END_WEIGHT))
+                            apply()
+                        }
                     } else {
                         Timber.e(it.exception)
                     }

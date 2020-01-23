@@ -3,7 +3,6 @@ package com.n8ify.charon.data.room.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.n8ify.charon.data.room.dao._base.BaseDao
 import com.n8ify.charon.model.entity.History
 import com.n8ify.charon.model.entity.HistoryAndResult
 

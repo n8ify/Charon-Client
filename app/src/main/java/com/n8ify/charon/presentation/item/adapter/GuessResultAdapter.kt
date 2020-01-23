@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.n8ify.charon.R
 import com.n8ify.charon.model.entity.Item
 import com.n8ify.charon.presentation.item.viewholder.GuessResultViewHolder
-import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
 class GuessResultAdapter : RecyclerView.Adapter<GuessResultViewHolder>() {
