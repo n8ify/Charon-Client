@@ -29,6 +29,11 @@ android {
             buildConfigField("String", "BASE_URL", "\"https://char-ron.herokuapp.com/\"")
         }
 
+        dev_local.initWith(buildTypes.debug)
+        dev_local {
+            buildConfigField("String", "BASE_URL", "\"https://192.168.42.140:8080/\"")
+        }
+
         release {
             minifyEnabled true
             debuggable false

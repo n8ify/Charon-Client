@@ -36,4 +36,19 @@
         <key>item_attribute_random_rate</key>
         <value>-1</value>
     </entry>
+
+    <entry>
+        <key>item_attribute_hodt_weight</key>
+        <value>-1</value>
+    </entry>
+
+    <entry>
+        <key>item_attribute_hodt_weight</key>
+        <value>-1</value>
+    </entry>
+
+    <entry>
+        <key>item_attribute_hoe_weight</key>
+        <value>-1</value>
+    </entry>
 </defaultsMap>

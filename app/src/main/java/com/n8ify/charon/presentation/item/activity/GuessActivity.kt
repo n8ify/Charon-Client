@@ -24,18 +24,19 @@ import com.n8ify.charon.presentation.item.fragment.PrepareFragment
 import com.n8ify.charon.presentation.item.fragment.ResultDialogFragment
 import com.n8ify.charon.presentation.item.misc.DetectSwipeGestureListener
 import kotlinx.android.synthetic.main.activity_guess.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
 
 class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChangeListener,
-    ResultDialogFragment.ResultCallback {
+    ResultDialogFragment.ResultCallback, CoroutineScope {
 
     private val itemViewModel: ItemViewModel by viewModel()
-    private val sensorViewModel: SensorViewModel by viewModel()
+
+    private val job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
     private val gestureCompat by lazy {
         GestureDetectorCompat(
@@ -52,16 +53,21 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
             CommonConstant.DEFAULT_ROUND_TIME_MILLISECOND
         }
         object : CountDownTimer(timeCount, 1000) {
+
+            var optionalMillis = 0L
+
             override fun onFinish() {
-                Toast.makeText(this@GuessActivity, "Timeout!", Toast.LENGTH_LONG).show()
-                showResult()
-                playTimeUpSound()
-                isCounting = false
+                runOnUiThread {
+                    Toast.makeText(this@GuessActivity, "Timeout!", Toast.LENGTH_LONG).show()
+                    showResult()
+                    playTimeUpSound()
+                    isCounting = false
+                }
             }
 
             override fun onTick(millisUntilFinished: Long) {
 
-                val secondLeft = millisUntilFinished / 1000
+                val secondLeft = (optionalMillis + millisUntilFinished) / 1000
 
                 Timber.i("Second left : %d ", secondLeft)
                 tv_timer.text = secondLeft.toString()
@@ -81,11 +87,6 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
             Timber.i("Remaining : %s", it.size)
             Timber.i("Left(s) : %s", it)
         }).also { itemViewModel.getItem(intent.extras.getInt("categoryId")) }
-        sensorViewModel.accZ.observe(this@GuessActivity, Observer {
-            Timber.d("Z : $it")
-        }).also {
-            sensorViewModel.initialSensor()
-        }
     }
 
     private fun prepareAndStart() {
@@ -143,6 +144,11 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
     }
 
     override fun onUp() {
+
+        runPostUpAttribute().also {
+            Timber.d("Cancel post up attribute")
+        }
+
         if (!isCounting) {
             return
         }
@@ -161,7 +167,25 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         }
     }
 
+    private fun runPostUpAttribute() {
+        cancel().also {
+            Timber.d("Cancel post down attribute")
+
+        }
+        attributeHolder?.let {
+            when (it.first) {
+                ItemAttributeConstant.HURRY_AND_INCREASE_TIME -> countDownTimer.optionalMillis += (it.second[0] as Int).also {
+                    Timber.d("Time Increase by HAIT")
+                }
+            }
+            attributeHolder = null
+        }
+    }
+
     override fun onDown() {
+
+        runPostDownAttribute()
+
         if (!isCounting) {
             return
         }
@@ -179,6 +203,21 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
             definedPostAction()
         }
     }
+
+    fun runPostDownAttribute() {
+        attributeHolder?.let {
+            when (it.first) {
+                ItemAttributeConstant.HURRY_OR_DEDUCT_TIME -> countDownTimer.optionalMillis -= (it.second[0] as Int).also{
+                    Timber.d("Deduct time by HODT")
+                }
+                ItemAttributeConstant.HURRY_OR_END -> countDownTimer.onFinish().also {
+                    Timber.d("End Game by HOE")
+                }
+            }
+            attributeHolder = null
+        }
+    }
+
 
     override fun onRight() {
         println("Right!")
@@ -213,7 +252,7 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         }
     }
 
-    var attributeHolder : Pair<String, String>? = null
+    var attributeHolder: Pair<String, Array<Any>>? = null
 
     private fun runAttribute() {
 
@@ -233,65 +272,113 @@ class GuessActivity : BaseActivity(), DetectSwipeGestureListener.OnDirectionChan
         /** TODO : map more attribute weight */
 
 
-        listOf(HODT_WEIGHT, HAIT_WEIGHT, HOE_WEIGHT).sortedByDescending { it.second }.run {
+        listOf(HODT_WEIGHT, HAIT_WEIGHT, HOE_WEIGHT).sortedByDescending { it.second }.forEach {
 
             val shouldAttributeProceed = fun(): Boolean {
-                return (Math.random() * (100 - 1 + 1) + 1) <= pref.getLong(
+                val random = (Math.random() * (100 - 1 + 1) + 1).toInt()
+                val indicator = pref.getLong(
                     RemoteConfigConstant.IA_RANDOM_RATE,
                     -1
                 )
+                Timber.i("Random = $random, Indicator = $indicator")
+                return  random <= indicator
             }
 
-            while (iterator().hasNext()) {
-                val attributeAndWeight = iterator().next()
-                when (attributeAndWeight.first) {
-                    ItemAttributeConstant.HURRY_OR_DEDUCT_TIME -> {
-                        if(shouldAttributeProceed.invoke()){
-                            val HODT_MAX = pref.getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MIN, -1)
-                            val HODT_MIN = pref.getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MAX, -1)
-                            var hodtGeneratedValue = (Math.random() * (HODT_MAX - HODT_MIN + 1) + HODT_MIN)
+            val attributeAndWeight = it
+            when (attributeAndWeight.first) {
+                ItemAttributeConstant.HURRY_OR_DEDUCT_TIME -> {
+                    if (shouldAttributeProceed.invoke()) {
+                        val HODT_MAX =
+                            pref.getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MIN, -1)
+                        val HODT_MIN =
+                            pref.getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MAX, -1)
+                        var hodtGeneratedValue =
+                            (Math.random() * (HODT_MAX - HODT_MIN + 1) + HODT_MIN).toInt()
+
+                        Timber.i("HODT is attached [value = $hodtGeneratedValue]")
 
 
-                            return@run
-                        } else {
-                            Timber.d("${attributeAndWeight.first} not proceed on this round")
-                        }
-                    }
-                    ItemAttributeConstant.HURRY_AND_INCREASE_TIME -> {
-                        if(shouldAttributeProceed.invoke()){
-                            val HAIT_MAX = pref.getLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MAX, -1)
-                            val HAIT_MIN = pref.getLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MIN, -1)
-                            var haitGeneratedValue = (Math.random() * (HAIT_MAX - HAIT_MIN + 1) + HAIT_MIN)
-
-                            GlobalScope.launch {
+                        launch(Dispatchers.IO) {
+                            while (true) {
                                 delay(1000).also {
-
+                                    hodtGeneratedValue = hodtGeneratedValue.minus(1)
                                 }
-
+                                if (hodtGeneratedValue == 0) {
+                                    attributeHolder =
+                                        ItemAttributeConstant.HURRY_OR_DEDUCT_TIME to arrayOf<Any>(hodtGeneratedValue, this)
+                                    break
+                                }
                             }
-
-                            return@run
-                        } else {
-                            Timber.d("${attributeAndWeight.first} not proceed on this round")
                         }
+                        return
                     }
-                    ItemAttributeConstant.HURRY_OR_END -> {
-                        if(shouldAttributeProceed.invoke()){
-                            val HOE_MAX = pref.getLong(RemoteConfigConstant.IA_HURRY_OR_END_MIN, -1)
-                            val HOE_MIN = pref.getLong(RemoteConfigConstant.IA_HURRY_OR_END_MAX, -1)
-                            val hoeGeneratedValue = (Math.random() * (HOE_MAX - HOE_MIN + 1) + HOE_MIN)
-                            return@run
-                        } else {
-                            Timber.d("${attributeAndWeight.first} not proceed on this round")
-                        }
-                    }
-                    /** TODO : add more attribute case */
-                    else -> {
-                        Timber.d(
-                            GuessActivity::class.java.simpleName,
-                            "Skip to attach an attribute on this round"
+                }
+                ItemAttributeConstant.HURRY_AND_INCREASE_TIME -> {
+                    if (shouldAttributeProceed.invoke()) {
+                        val HAIT_MAX = pref.getLong(
+                            RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MAX,
+                            -1
                         )
+                        val HAIT_MIN = pref.getLong(
+                            RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MIN,
+                            -1
+                        )
+                        var haitGeneratedValue =
+                            (Math.random() * (HAIT_MAX - HAIT_MIN + 1) + HAIT_MIN).toInt()
+
+                        Timber.w("HAIT is attached [value = $haitGeneratedValue]")
+
+                        attributeHolder =
+                            ItemAttributeConstant.HURRY_AND_INCREASE_TIME to  arrayOf<Any>(haitGeneratedValue)
+
+                        launch(Dispatchers.IO) {
+                            while (true) {
+                                delay(1000).also {
+                                    haitGeneratedValue = haitGeneratedValue.minus(1)
+                                }
+                                if (haitGeneratedValue == 0) {
+                                    attributeHolder = null
+                                    break
+                                }
+                            }
+                        }
+
+                        return
                     }
+                }
+                ItemAttributeConstant.HURRY_OR_END -> {
+                    if (shouldAttributeProceed.invoke()) {
+                        val HOE_MAX = pref.getLong(RemoteConfigConstant.IA_HURRY_OR_END_MIN, -1)
+                        val HOE_MIN = pref.getLong(RemoteConfigConstant.IA_HURRY_OR_END_MAX, -1)
+                        var hoeGeneratedValue =
+                            (Math.random() * (HOE_MAX - HOE_MIN + 1) + HOE_MIN).toInt()
+
+                        Timber.w("HOE is attached [value = $hoeGeneratedValue]")
+
+                        attributeHolder =
+                            ItemAttributeConstant.HURRY_OR_END to  arrayOf<Any>(hoeGeneratedValue)
+
+                        launch(Dispatchers.IO) {
+                            while (true) {
+                                delay(1000).also {
+                                    hoeGeneratedValue = hoeGeneratedValue.minus(1)
+                                }
+                                if (hoeGeneratedValue == 0) {
+                                    countDownTimer.onFinish()
+                                    break
+                                }
+                            }
+                        }
+
+                        return
+                    }
+                }
+                /** TODO : add more attribute case */
+                else -> {
+                    Timber.w(
+                        GuessActivity::class.java.simpleName,
+                        "Skip to attach an attribute on this round"
+                    )
                 }
             }
         }

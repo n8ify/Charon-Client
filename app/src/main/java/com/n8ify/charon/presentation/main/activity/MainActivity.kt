@@ -43,19 +43,21 @@ class MainActivity : BaseActivity(), CategoryViewHolder.CategoryContext {
                             )}"
                         )
                         pref.edit().run {
-                            putLong(RemoteConfigConstant.DEFAULT_ITEM_AMOUNT, getLong(RemoteConfigConstant.DEFAULT_ITEM_AMOUNT))
-                            putLong(RemoteConfigConstant.DEFAULT_ITEM_LIST_POLICY, getLong(RemoteConfigConstant.DEFAULT_ITEM_LIST_POLICY))
-                            putLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MIN, getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MIN))
-                            putLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MAX, getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MAX))
-                            putLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MIN, getLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MIN))
-                            putLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MAX, getLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MAX))
-                            putLong(RemoteConfigConstant.IA_HURRY_OR_END_MIN, getLong(RemoteConfigConstant.IA_HURRY_OR_END_MIN))
-                            putLong(RemoteConfigConstant.IA_HURRY_OR_END_MAX, getLong(RemoteConfigConstant.IA_HURRY_OR_END_MAX))
-                            putLong(RemoteConfigConstant.IA_RANDOM_RATE, getLong(RemoteConfigConstant.IA_RANDOM_RATE))
-                            putLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_WEIGHT, getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_WEIGHT))
-                            putLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_WEIGHT, getLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_WEIGHT))
-                            putLong(RemoteConfigConstant.IA_HURRY_OR_END_WEIGHT, getLong(RemoteConfigConstant.IA_HURRY_OR_END_WEIGHT))
-                            apply()
+                            putLong(RemoteConfigConstant.DEFAULT_ITEM_AMOUNT, getLong(RemoteConfigConstant.DEFAULT_ITEM_AMOUNT)).apply()
+                            putLong(RemoteConfigConstant.DEFAULT_ITEM_LIST_POLICY, getLong(RemoteConfigConstant.DEFAULT_ITEM_LIST_POLICY)).apply()
+                            putLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MIN, getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MIN)).apply()
+                            putLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MAX, getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_TIME_MAX)).apply()
+                            putLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MIN, getLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MIN)).apply()
+                            putLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MAX, getLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_TIME_MAX)).apply()
+                            putLong(RemoteConfigConstant.IA_HURRY_OR_END_MIN, getLong(RemoteConfigConstant.IA_HURRY_OR_END_MIN)).apply()
+                            putLong(RemoteConfigConstant.IA_HURRY_OR_END_MAX, getLong(RemoteConfigConstant.IA_HURRY_OR_END_MAX)).apply()
+                            putLong(RemoteConfigConstant.IA_RANDOM_RATE, getLong(RemoteConfigConstant.IA_RANDOM_RATE)).apply()
+                            putLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_WEIGHT, getLong(RemoteConfigConstant.IA_HURRY_OR_DEDUCT_WEIGHT)).apply()
+                            putLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_WEIGHT, getLong(RemoteConfigConstant.IA_HURRY_AND_INCREASE_WEIGHT)).apply()
+                            putLong(RemoteConfigConstant.IA_HURRY_OR_END_WEIGHT, getLong(RemoteConfigConstant.IA_HURRY_OR_END_WEIGHT)).apply()
+                            pref.all.forEach {
+                                Timber.i("Config .. ${it.key} -> ${it.value}")
+                            }
                         }
                     } else {
                         Timber.e(it.exception)

@@ -1,5 +1,6 @@
 package com.n8ify.charon.module
 
+import android.content.Context
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.n8ify.charon.data.api.CategoryAPI
@@ -18,11 +19,18 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.androidx.viewmodel.dsl.viewModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.BufferedInputStream
+import java.security.KeyStore
+import java.security.cert.CertificateFactory
 import java.util.concurrent.TimeUnit
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManagerFactory
+import java.security.SecureRandom
+
 
 val appModule = org.koin.dsl.module {
-    single { provideRetrofit().create(CategoryAPI::class.java) }
-    single { provideRetrofit().create(ItemAPI::class.java) }
+    single { provideRetrofit(context = get()).create(CategoryAPI::class.java) }
+    single { provideRetrofit(context = get()).create(ItemAPI::class.java) }
     factory<CategoryRepository> { CategoryRepositoryImpl(categoryAPI = get()) }
     factory<ItemRepository> { ItemRepositoryImpl(itemAPI = get()) }
     factory<HistoryRepository> { HistoryRepositoryImpl() }
@@ -37,17 +45,44 @@ val appModule = org.koin.dsl.module {
     viewModel { SensorViewModel(application = get()) }
 }
 
-fun provideOkHttp() =
+fun provideOkHttp(context: Context) =
     OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().apply { this@apply.level = HttpLoggingInterceptor.Level.BODY })
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            this@apply.level = HttpLoggingInterceptor.Level.BODY
+        })
         .readTimeout(1, TimeUnit.MINUTES)
         .connectTimeout(1, TimeUnit.MINUTES)
+        .socketFactory(getSSLContext(context).socketFactory)
         .build()
 
-fun provideRetrofit() =
+fun provideRetrofit(context: Context) =
     Retrofit.Builder()
-        .client(provideOkHttp())
+        .client(provideOkHttp(context))
         .baseUrl(com.n8ify.charon.BuildConfig.BASE_URL)
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setDateFormat("dd/MM/yyyy HH:mm:ss").create()))
         .build()
+
+fun getSSLContext(context: Context): SSLContext {
+
+    val certificateFactory = CertificateFactory.getInstance("X.509")
+    var caInput = BufferedInputStream(context.resources.openRawResource(com.n8ify.charon.R.raw.charon_local))
+
+    val certificate = certificateFactory.generateCertificate(caInput).also {
+        caInput.close()
+    }
+
+    val keyStoreType = KeyStore.getDefaultType()
+    val keyStore = KeyStore.getInstance(keyStoreType)
+    keyStore.load(null, null);
+    keyStore.setCertificateEntry("ca", certificate);
+
+    val trustAlgorithm = TrustManagerFactory.getDefaultAlgorithm()
+    val trustManagerFactory = TrustManagerFactory.getInstance(trustAlgorithm)
+    trustManagerFactory.init(keyStore);
+
+    return SSLContext.getInstance("TLSv1.2").also {
+        it.init(null, trustManagerFactory.trustManagers, SecureRandom())
+    }
+
+}
